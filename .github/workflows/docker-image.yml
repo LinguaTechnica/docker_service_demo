@@ -18,5 +18,14 @@ jobs:
       run: docker build . --file Dockerfile --tag apiservice:latest
     - name: Update latest tag
       run: docker tag registry.digitalocean.com/ltpreviews/apiservice
+
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
     - name: Update registry for automaic deployment
       run: docker push registry.digitalocean.com/ltpreviews/apiservice
+      with:
+       token: ${{ secrets.DOCTL_TOKEN }}
+          
+      

@@ -16,16 +16,18 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag apiservice:latest
+    
     - name: Update latest tag
       run: docker tag registry.digitalocean.com/ltpreviews/apiservice
-
-  deploy:
-    runs-on: ubuntu-latest
     
-    steps:
-    - name: Update registry for automaic deployment
-      run: docker push registry.digitalocean.com/ltpreviews/apiservice
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
       with:
-       token: ${{ secrets.DOCTL_TOKEN }}
-          
-      
+        token: ${{ secrets.DO_ACCESS_TOKEN }}
+    
+    - name: Login to Digital Ocean server
+      run: doctl registry login
+    
+    - name: Deploy
+      run: docker push registry.digitalocean.com/ltpreviews/apiservice
+  

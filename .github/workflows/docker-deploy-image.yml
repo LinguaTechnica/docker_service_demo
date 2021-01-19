@@ -18,7 +18,7 @@ jobs:
       run: docker build . --file Dockerfile --tag apiservice:latest
     
     - name: Update latest tag
-      run: docker tag registry.digitalocean.com/ltpreviews/apiservice
+      run: docker tag apiservice registry.digitalocean.com/ltpreviews/apiservice
     
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
